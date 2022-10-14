@@ -54,9 +54,9 @@
         <label> Email: </label><br>
         <input type="text" name="email" value="<?php echo $email;?>"><br>
         <label> Contraseña: </label><br>
-        <input type="password" name="pass" value="<?php echo $password;?>"><br>
+        <input type="text" name="pass" value="<?php echo $password;?>"><br>
         <label> Imágen: </label><br>
-        <input type="text" name="image" value="<?php echo $img;?>"><br>
+        <input type="file" name="image" value="<?php echo $img;?>"><br>
         <br><input type="submit" name="enviar" value="ACTUALIZAR">
         <a href="index.php"> -Inicio- </a>
     </form>
