@@ -1,124 +1,74 @@
-<?php include("db.php");
-$sql="select*from usuarios";
-$resultado=mysqli_query($conn,$sql);
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>CRUD USUARIOS</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="rou pl-5">
+            <div class="col bg-dark text-light">
+                <h1>CRUD Usuarios</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-4">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre (s):</label>
+                        <input type="text" class="form-control" id="name" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido (s):</label>
+                        <input type="text" class="form-control" id="lastname" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="text" class="form-control" id="email" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="contraseña" class="form-label">Contraseña:</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">Imágen:</label>
+                        <input type="file" class="form-control" name="image" id="image" >
+                    </div>
+                    <button type="button" class="btn btn-outline-danger" id="insert">Agregar</button>
+                </form>
 
-<?php include("includes/header.php") ?>
-    <title>Usuarios</title>
-    <script type="text/javascript">
-        function confirmar(){
-            return confirm('¿Estás Seguro?, se eliminaran los datos');
-        }
-    </script>
-    <h1>Usuarios</h1>
-    
-    <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
-        <table>
-            <tr>
-                <th colspan="5"><h1>Lista Usuarios</h1></th>
-            </tr>
-            <tr>
-                <td>
-                    <label> Id: </label><br>
-                    <input type="text" name="id"><br>
-                </td>
-                <td>
-                    <label> Nombre(s): </label><br>
-                    <input type="text" name="nombre"><br>
-                </td>
-                <td>
-                    <input type="submit" name="enviar" value="BUSCAR">
-                </td>
-                <td>
-                    <a href="">Mostrar todos los usuarios</a>
-                </td>
-                <td>
-                    <a href="create.php">Nuevo Usuario</a>
-                </td>
-            </tr>
-        </table>
-    </form>
+            </div>
+            <div class="col-8">
+                <table class="table">
+                    <thead>
+                        <tr class="bg-danger text-black">
+                        <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Email</th>
+                        
+                        <th scope="col">Imágen</th>
+                        <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id = "cuerpoTabla">
 
-    <table>
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Imagen</th>
-                <th>Contraseña</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-            if(isset($_POST['enviar'])){
-                $nombre= $_POST['nombre'];
-                $id=$_POST['id'];
 
-                if(empty($_POST['nombre']) && empty($_POST['id'])) {
-                    echo "<script language='JavaScript'>
-                    alert('Ingresa el Nombre o el Id');
-                    location.assign('index.php');
-                    </script>";
-                }
-                else{
-                    if(empty($_POST['nombre'])){
-                      $sql="select * from usuarios where id=".$id;
-                    }
-                    if(empty($_POST['id'])){
-                        $sql="select * from usuarios where nombre like '%".$nombre."%'";
-                    }
-                    if(!empty($_POST['nombre'])&&!empty($_POST['id'])){
-                        $sql="select * from usuarios where id =".$id." and nombre like '%".$nombre."%'";
-                    }
-                }
-                $resultado=mysqli_query($conn,$sql);
-                while($filas=mysqli_fetch_assoc($resultado)){
-                ?>
-                 <tr>
-                    <td><?php echo $filas['id']?></td>
-                    <td><?php echo $filas['nombre']?></td>
-                    <td><?php echo $filas['apellido']?></td>
-                    <td><?php echo $filas['email']?></td>
-                    <td><?php echo $filas['image']?></td>
-                    <td><?php echo $filas['pass']?></td>
-                    <td>
-                        <?php echo "<a href='update.php?id=".$filas['id']."'>EDITAR</a>";?>
-                        -
-                        <?php echo "<a href='delete.php?id=".$filas['id']."' onclick='return confirmar()'>ELIMINAR</a>";?>
-                    </td>
-                </tr>
-                <?php
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>  
+    </div>
 
-          
-            }
-                
-        }else{
-
-            while($filas=mysqli_fetch_assoc($resultado)){
-        ?>
-                 <tr>
-                    <td><?php echo $filas['id']?></td>
-                    <td><?php echo $filas['nombre']?></td>
-                    <td><?php echo $filas['apellido']?></td>
-                    <td><?php echo $filas['email']?></td>
-                    <td><?php echo $filas['image']?></td>
-                    <td><?php echo $filas['pass']?></td>
-                    <td>
-                        <?php echo "<a href='update.php?id=".$filas['id']."'>EDITAR</a>";?>
-                        -
-                        <?php echo "<a href='delete.php?id=".$filas['id']."' onclick='return confirmar()'>ELIMINAR</a>";?>
-                    </td>
-                </tr>
-        <?php
-                }
-            }
-        ?>
-        </tbody>
-    </table>
-     
-    <?php mysqli_close($conn); ?>
-
-<?php include("includes/footer.php") ?>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="funciones.js"></script>
+</body>
+</html>

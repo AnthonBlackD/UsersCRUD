@@ -1,14 +1,14 @@
 <?php
     
-    $id=$_GET['id'];
+    
     
     include("db.php");
-    
+    $id = $_POST['id'];
       
-    $sql="select * from usuarios where id='".$id."'";
+    $sql="delete  from usuarios where id='".$id."'";
         $resultado=mysqli_query($conn,$sql);
 
-        $fila=mysqli_fetch_assoc($resultado);
+    /*    $fila=mysqli_fetch_assoc($resultado);
         $nombre=$fila['nombre'];
         $apellido=$fila['apellido'];
         $email=$fila['email'];
@@ -32,5 +32,5 @@
                     alert('Los datos NO se eliminaron de la Base de Datos');
                     location.assign('index.php');
                     </script>";
-    }
+    }*/
 ?>
